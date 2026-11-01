@@ -35,7 +35,7 @@ export default function ExpenseList({ expenses, sort, onSortChange, monthLabel, 
           <h2 id="activity-heading" className="text-[15px] font-semibold tracking-tight">
             Activity <span className="ml-1 font-normal text-muted tabular-nums">{count}</span>
           </h2>
-          <label className="relative">
+          <label className="relative" data-tour="sort">
             <span className="sr-only">Sort expenses</span>
             <Sort className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted" />
             <select
@@ -50,7 +50,7 @@ export default function ExpenseList({ expenses, sort, onSortChange, monthLabel, 
         </div>
 
         {expenses.length > 0 && (
-          <>
+          <div data-tour="search">
             <label className="relative mt-4 block">
               <span className="sr-only">Search expenses</span>
               <Search className="pointer-events-none absolute top-1/2 left-4 h-[18px] w-[18px] -translate-y-1/2 text-muted" />
@@ -77,12 +77,12 @@ export default function ExpenseList({ expenses, sort, onSortChange, monthLabel, 
                 ))}
               </div>
             )}
-          </>
+          </div>
         )}
       </div>
 
       {count > 0 ? (
-        <div className="pt-2 pb-2">
+        <div className="pt-2 pb-2" data-tour="activity-list">
           {groups.map((g) => (
             <div key={g.key ?? 'all'}>
               {g.key && (

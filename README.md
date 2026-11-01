@@ -10,11 +10,12 @@ SpendSnap is a tiny, private expense tracker. Add an expense and instantly see a
 Designed & built by **Jirjis**.
 
 ## Features
-- **Installable PWA** — add to home screen, opens full-screen, **works offline** (service worker precaches the whole build). Home-screen shortcut: *Add expense*.
+- **Installable PWA** — add to home screen, opens full-screen, **works offline** (service worker precaches the whole build). Home-screen shortcut: *Add expense*. Install prompts hide themselves once the app is installed.
 - **Mobile-first** — bottom-sheet add/edit, big thumb-friendly amount entry, one-tap category grid, Today/Yesterday chips, floating add button, safe-area aware.
 - **Monthly summary** — total, change vs previous month, daily average, count, biggest expense and a one-line insight.
 - **Daily spending chart** + **category breakdown** (stacked bar + list), colour-coded.
 - **Sortable activity** — newest, oldest, highest, lowest, or by category (grouped with subtotals). Search notes/amounts, filter by category. Sort choice is remembered.
+- **Guided tour** for first-time users — spotlights every feature step by step (optionally with sample data it cleans up afterwards). Replay any time from Settings → Help.
 - **Undo** deletes from the toast.
 - **Your data** — CSV export per month, full JSON backup and restore (merges safely), demo data, delete all.
 - **Light & dark** — follows the system theme. Currency: INR, USD, EUR, GBP.

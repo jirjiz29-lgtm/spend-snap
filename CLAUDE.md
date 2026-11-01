@@ -17,7 +17,11 @@ Routes: `/` Landing, `/app` Tracker (lazy-loaded). `/app?add=1` opens the add sh
 - `public/manifest.webmanifest` (start_url `/app`, standalone) + PNG icons in `public/icons/`.
 - `src/sw.js` is a **template**: the `serviceWorker()` plugin in `vite.config.js` fills in the version + every built file and emits `dist/sw.js`. Navigations are network-first with cached fallback; assets cache-first.
 - SW registers only in production (`src/pwa.js`), which also captures `beforeinstallprompt` for `useInstallPrompt`.
+- Install state (`useInstallPrompt`): installed = standalone display mode, or an `appinstalled` event remembered in `spendsnap_installed` (cleared if the browser offers install again). Install CTAs on Landing/Settings/tour hide when installed.
 - Test PWA behaviour with `npm run build && npm run preview`, not `npm run dev`.
+
+## Guided tour
+`components/GuidedTour.jsx` — shown on first visit to `/app` (flag `spendsnap_tour_done_v1`), replayable from Settings → Help. Steps target elements via `data-tour="…"` attributes; steps whose element isn't rendered are skipped. **When adding a feature, add a `data-tour` anchor and a step.**
 
 ## Data model
 ```js

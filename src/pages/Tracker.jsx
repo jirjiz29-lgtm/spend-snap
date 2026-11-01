@@ -4,6 +4,7 @@ import CategoryBreakdown from '../components/CategoryBreakdown.jsx'
 import DailyChart from '../components/DailyChart.jsx'
 import ExpenseForm from '../components/ExpenseForm.jsx'
 import ExpenseList from '../components/ExpenseList.jsx'
+import GuidedTour from '../components/GuidedTour.jsx'
 import { Logo, Plus, Sliders } from '../components/Icons.jsx'
 import MonthSwitcher from '../components/MonthSwitcher.jsx'
 import SettingsPanel from '../components/SettingsPanel.jsx'
@@ -18,18 +19,21 @@ import { parseBackup, toBackup } from '../utils/backup.js'
 import { toCSV } from '../utils/csv.js'
 import { downloadFile } from '../utils/download.js'
 import { currencySymbol, formatCurrency, formatMonth, monthKey, todayISO } from '../utils/format.js'
+import { isTourDone, markTourDone } from '../utils/storage.js'
 import { filterByMonth, getSummary } from '../utils/summary.js'
 
 const haptic = () => navigator.vibrate?.(8)
 
 export default function Tracker() {
   useDocumentTitle('SpendSnap')
-  const { expenses, addExpense, updateExpense, deleteExpense, restoreExpense, importExpenses, loadDemoData, clearAll } = useExpenses()
+  const { expenses, addExpense, updateExpense, deleteExpense, restoreExpense, importExpenses, loadDemoData, removeExpenses, clearAll } = useExpenses()
   const [settings, updateSettings] = useSettings()
   const [month, setMonth] = useState(() => monthKey())
   const [sheet, setSheet] = useState(null) // { type: 'add' } | { type: 'edit', expense } | { type: 'settings' }
   const { toast, showToast, dismissToast } = useToast()
   const [params, setParams] = useSearchParams()
+  // First visit shows the guided tour — unless the app was opened straight into "add" from a shortcut.
+  const [tourOpen, setTourOpen] = useState(() => !isTourDone() && !params.get('add'))
 
   const { currency, sort } = settings
   const fmt = useCallback((amount) => formatCurrency(amount, currency), [currency])
@@ -102,6 +106,18 @@ export default function Tracker() {
     }
   }
 
+  function startTour() {
+    setSheet(null)
+    setMonth(monthKey())
+    setTourOpen(true)
+  }
+
+  function handleTourClose({ demoLoaded }) {
+    markTourDone()
+    setTourOpen(false)
+    if (demoLoaded) showToast('Sample data kept — clear it any time in Settings')
+  }
+
   function handleClear() {
     if (window.confirm(`Delete all ${expenses.length} expenses from this device? This can’t be undone — back up first if unsure.`)) {
       clearAll()
@@ -120,10 +136,10 @@ export default function Tracker() {
           </Link>
           <MonthSwitcher month={month} onChange={setMonth} />
           <div className="flex items-center gap-2 justify-self-end">
-            <button className="btn-primary hidden h-10 px-4 text-sm lg:inline-flex" onClick={openAdd}>
+            <button className="btn-primary hidden h-10 px-4 text-sm lg:inline-flex" onClick={openAdd} data-tour="add-btn">
               <Plus className="h-4 w-4" /> Add expense
             </button>
-            <button className="btn-icon" onClick={() => setSheet({ type: 'settings' })} aria-label="Settings and data">
+            <button className="btn-icon" onClick={() => setSheet({ type: 'settings' })} aria-label="Settings and data" data-tour="settings">
               <Sliders className="h-5 w-5" />
             </button>
           </div>
@@ -155,6 +171,7 @@ export default function Tracker() {
         className="fixed right-4 bottom-[calc(env(safe-area-inset-bottom)+20px)] z-30 flex h-16 w-16 items-center justify-center rounded-[22px] bg-accent text-on-accent shadow-[0_10px_30px_-6px_rgb(0_0_0/0.35)] transition active:scale-95 lg:hidden"
         onClick={openAdd}
         aria-label="Add expense"
+        data-tour="add-fab"
       >
         <Plus className="h-7 w-7" strokeWidth={2.2} />
       </button>
@@ -181,8 +198,18 @@ export default function Tracker() {
           onRestore={handleRestore}
           onDemo={handleDemo}
           onClear={handleClear}
+          onTour={startTour}
         />
       </Sheet>
+
+      <GuidedTour
+        open={tourOpen}
+        hasExpenses={expenses.length > 0}
+        onLoadDemo={loadDemoData}
+        onRemoveDemo={removeExpenses}
+        onAddExpense={openAdd}
+        onClose={handleTourClose}
+      />
 
       <Toast toast={toast} onDismiss={dismissToast} />
     </div>

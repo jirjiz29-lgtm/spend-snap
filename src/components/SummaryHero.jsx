@@ -41,7 +41,7 @@ function Stat({ label, value }) {
 export default function SummaryHero({ summary, fmt }) {
   const monthName = formatMonth(summary.month).split(' ')[0]
   return (
-    <section className="@container rounded-[28px] bg-hero p-5 text-on-hero sm:p-6" aria-label="Monthly summary">
+    <section data-tour="summary" className="@container rounded-[28px] bg-hero p-5 text-on-hero sm:p-6" aria-label="Monthly summary">
       <div className="flex items-center justify-between gap-3">
         <h2 className="text-sm text-hero-muted">Spent in {monthName}</h2>
         <Delta vs={summary.vsLastMonth} month={summary.month} fmt={fmt} />

@@ -41,8 +41,18 @@ export function useExpenses() {
 
   const importExpenses = useCallback((incoming) => setExpenses((prev) => mergeExpenses(prev, incoming)), [])
 
-  const loadDemoData = useCallback(() => setExpenses((prev) => [...makeDemoExpenses(), ...prev]), [])
+  /** Adds sample data and returns the new ids so it can be removed again later. */
+  const loadDemoData = useCallback(() => {
+    const demo = makeDemoExpenses()
+    setExpenses((prev) => [...demo, ...prev])
+    return demo.map((e) => e.id)
+  }, [])
+
+  const removeExpenses = useCallback((ids) => {
+    const remove = new Set(ids)
+    setExpenses((prev) => prev.filter((e) => !remove.has(e.id)))
+  }, [])
   const clearAll = useCallback(() => setExpenses([]), [])
 
-  return { expenses, addExpense, updateExpense, deleteExpense, restoreExpense, importExpenses, loadDemoData, clearAll }
+  return { expenses, addExpense, updateExpense, deleteExpense, restoreExpense, importExpenses, loadDemoData, removeExpenses, clearAll }
 }

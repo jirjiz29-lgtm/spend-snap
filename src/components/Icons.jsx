@@ -27,3 +27,4 @@ export const Archive = (p) => <svg {...base} {...p}><rect x="3" y="4" width="18"
 export const Wand = (p) => <svg {...base} {...p}><path d="m14 7 3 3M5 19 17.5 6.5a1.5 1.5 0 0 1 2 2L7 21M19 14v4M21 16h-4M8 3v3M9.5 4.5h-3" /></svg>
 export const Phone = (p) => <svg {...base} {...p}><rect x="6" y="2.5" width="12" height="19" rx="3" /><path d="M11 18.5h2" /></svg>
 export const Check = (p) => <svg {...base} {...p}><path d="M20 6 9 17l-5-5" /></svg>
+export const Compass = (p) => <svg {...base} {...p}><circle cx="12" cy="12" r="9" /><path d="m15.5 8.5-2 5-5 2 2-5 5-2Z" /></svg>

@@ -5,7 +5,7 @@ export default function CategoryBreakdown({ summary, fmt }) {
   const data = summary.byCategory
 
   return (
-    <section className="card p-5" aria-labelledby="cat-heading">
+    <section className="card p-5" aria-labelledby="cat-heading" data-tour="categories">
       <div className="flex items-baseline justify-between">
         <h2 id="cat-heading" className="text-[15px] font-semibold tracking-tight">Where it went</h2>
         {data.length > 0 && <span className="text-xs text-muted">{data.length} {data.length === 1 ? 'category' : 'categories'}</span>}

@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { useInstallPrompt } from '../hooks/useInstallPrompt.js'
 import { CURRENCIES } from '../utils/format.js'
-import { Archive, Download, Phone, Trash, Upload, Wand } from './Icons.jsx'
+import { Archive, Compass, Download, Phone, Trash, Upload, Wand } from './Icons.jsx'
 
 function Row({ icon: Icon, title, text, onClick, danger, disabled }) {
   return (
@@ -28,7 +28,7 @@ function Group({ title, children }) {
   )
 }
 
-export default function SettingsPanel({ currency, onCurrencyChange, monthLabel, monthCount, totalCount, onExportCSV, onBackup, onRestore, onDemo, onClear }) {
+export default function SettingsPanel({ currency, onCurrencyChange, monthLabel, monthCount, totalCount, onExportCSV, onBackup, onRestore, onDemo, onClear, onTour }) {
   const fileRef = useRef(null)
   const { canInstall, install, installed, ios } = useInstallPrompt()
 
@@ -88,6 +88,12 @@ export default function SettingsPanel({ currency, onCurrencyChange, monthLabel, 
             if (file) onRestore(file)
           }}
         />
+      </Group>
+
+      <Group title="Help">
+        <div className="overflow-hidden rounded-2xl border border-line">
+          <Row icon={Compass} title="Replay the guided tour" text="A 1-minute walk through every feature" onClick={onTour} />
+        </div>
       </Group>
 
       <p className="pb-1 text-center text-xs text-muted">Stored only on this device. Nothing is sent anywhere.

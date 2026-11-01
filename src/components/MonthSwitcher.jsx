@@ -6,7 +6,7 @@ export default function MonthSwitcher({ month, onChange }) {
   const atCurrent = month >= current
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center" data-tour="month">
       <button className="btn-icon" onClick={() => onChange(shiftMonth(month, -1))} aria-label="Previous month">
         <ChevronLeft className="h-5 w-5" />
       </button>

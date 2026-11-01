@@ -9,7 +9,7 @@ export default function DailyChart({ expenses, month, fmt }) {
   const days = series.length
 
   return (
-    <section className="card p-5" aria-labelledby="daily-heading">
+    <section className="card p-5" aria-labelledby="daily-heading" data-tour="daily">
       <div className="flex items-baseline justify-between gap-3">
         <h2 id="daily-heading" className="shrink-0 text-[15px] font-semibold tracking-tight">Daily spending</h2>
         {max > 0 && (

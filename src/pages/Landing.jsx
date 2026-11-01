@@ -70,7 +70,9 @@ export default function Landing() {
         </Link>
         <nav className="flex items-center gap-1 sm:gap-2">
           <a href="#how" className="hidden rounded-full px-4 py-2 text-sm text-ink-2 hover:text-ink sm:block">How it works</a>
-          <a href="#install" className="hidden rounded-full px-4 py-2 text-sm text-ink-2 hover:text-ink sm:block">Install</a>
+          {!installed && (
+            <a href="#install" className="hidden rounded-full px-4 py-2 text-sm text-ink-2 hover:text-ink sm:block">Install</a>
+          )}
           <Link to="/app" className="btn-primary h-10 px-5 text-sm">Open app</Link>
         </nav>
       </header>
@@ -89,10 +91,10 @@ export default function Landing() {
               <Link to="/app" className="btn-primary px-7">
                 Start tracking <ArrowRight className="h-4 w-4" />
               </Link>
-              {canInstall && !installed ? (
+              {canInstall ? (
                 <button className="btn-secondary" onClick={install}>Install the app</button>
               ) : (
-                <a href="#install" className="btn-secondary">Get it on your phone</a>
+                !installed && <a href="#install" className="btn-secondary">Get it on your phone</a>
               )}
             </div>
             <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted">
@@ -137,6 +139,7 @@ export default function Landing() {
           </div>
         </section>
 
+        {!installed && (
         <section id="install" className="scroll-mt-8 px-3 pb-6 sm:px-6">
           <div className="mx-auto grid max-w-6xl gap-10 rounded-[36px] bg-hero px-6 py-14 text-on-hero sm:px-12 lg:grid-cols-2 lg:items-end lg:py-20">
             <div>
@@ -155,13 +158,14 @@ export default function Landing() {
               </ol>
               <div className="flex flex-wrap gap-3 pt-2">
                 <Link to="/app" className="btn-accent px-7">Open SpendSnap <ArrowRight className="h-4 w-4" /></Link>
-                {canInstall && !installed && (
+                {canInstall && (
                   <button className="inline-flex h-12 items-center rounded-full border border-hero-line px-6 text-[15px] font-medium transition hover:bg-white/5" onClick={install}>Install now</button>
                 )}
               </div>
             </div>
           </div>
         </section>
+        )}
       </main>
 
       <footer className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-10 pb-[calc(env(safe-area-inset-bottom)+40px)] text-sm text-muted sm:flex-row sm:justify-between sm:px-6">

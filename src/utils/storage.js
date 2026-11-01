@@ -3,6 +3,7 @@ import { NOTE_MAX } from './validation.js'
 
 export const STORAGE_KEY = 'spendsnap_expenses_v1'
 export const SETTINGS_KEY = 'spendsnap_settings_v1'
+export const TOUR_KEY = 'spendsnap_tour_done_v1'
 
 const DEFAULT_SETTINGS = { currency: 'INR', sort: 'date-desc' }
 
@@ -59,3 +60,6 @@ export const saveSettings = (settings) => writeJSON(SETTINGS_KEY, settings)
 export function newId() {
   return globalThis.crypto?.randomUUID?.() ?? `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`
 }
+
+export const isTourDone = () => readJSON(TOUR_KEY) === true
+export const markTourDone = () => writeJSON(TOUR_KEY, true)
