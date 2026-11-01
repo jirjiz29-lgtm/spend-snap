@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+/* Design tokens — warm paper + ink, one lime accent. Dark mode follows the system. */
+:root {
+  --bg: #f4f3ef;
+  --surface: #ffffff;
+  --surface-2: #eeede8;
+  --ink: #121212;
+  --ink-2: #3d3d3a;
+  --muted: #74736d;
+  --line: #e3e1da;
+  --accent: #c8f169;
+  --on-accent: #121212;
+  --danger: #d14343;
+  --good: #2f8f5b;
+  --hero: #121212;
+  --on-hero: #f4f3ef;
+  --hero-muted: #9b9a94;
+  --hero-line: #2d2d2b;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d0d0c;
+    --surface: #171716;
+    --surface-2: #21211f;
+    --ink: #f1f0ea;
+    --ink-2: #cfcec7;
+    --muted: #8f8e88;
+    --line: #2a2a28;
+    --danger: #f07070;
+    --good: #67cf92;
+    --hero: #1c1c1a;
+    --on-hero: #f1f0ea;
+    --hero-muted: #8f8e88;
+    --hero-line: #31312e;
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-danger: var(--danger);
+  --color-good: var(--good);
+  --color-hero: var(--hero);
+  --color-on-hero: var(--on-hero);
+  --color-hero-muted: var(--hero-muted);
+  --color-hero-line: var(--hero-line);
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior-y: none;
+  }
+  button, a, label, select, input {
+    touch-action: manipulation;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-[28px] border border-line bg-surface;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-medium whitespace-nowrap transition select-none active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40 h-12 bg-ink px-6 text-[15px] text-bg hover:opacity-90;
+  }
+  .btn-accent {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-medium whitespace-nowrap transition select-none active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40 h-12 bg-accent px-6 text-[15px] text-on-accent hover:brightness-95;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-medium whitespace-nowrap transition select-none active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40 h-12 border border-line bg-surface px-5 text-[15px] text-ink hover:bg-surface-2;
+  }
+  .btn-icon {
+    @apply inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-ink-2 transition hover:bg-surface-2 active:scale-95 disabled:pointer-events-none disabled:opacity-30;
+  }
+  .input {
+    @apply h-12 w-full rounded-2xl border border-line bg-surface-2/50 px-4 text-base text-ink outline-none transition placeholder:text-muted focus:border-ink focus:bg-surface;
+  }
+  .chip {
+    @apply inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border border-line px-3.5 text-sm whitespace-nowrap text-ink-2 transition select-none hover:border-ink/40;
+  }
+  .chip-active {
+    @apply border-ink bg-ink text-bg hover:border-ink;
+  }
+  .eyebrow {
+    @apply text-[11px] font-medium tracking-[0.08em] text-muted uppercase;
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+/* Bottom sheet on phones, centred dialog from sm up. Uses native <dialog> for focus trapping + Esc. */
+dialog.sheet {
+  margin: auto auto 0;
+  width: 100%;
+  max-width: 100%;
+  max-height: 94dvh;
+  padding: 0;
+  border: 0;
+  border-radius: 28px 28px 0 0;
+  background: var(--surface);
+  color: var(--ink);
+  overscroll-behavior: contain;
+}
+dialog.sheet[open] { animation: sheet-up 320ms cubic-bezier(0.2, 0.9, 0.25, 1); }
+dialog.sheet::backdrop { background: rgb(0 0 0 / 0.45); animation: fade 200ms ease-out; }
+@media (min-width: 640px) {
+  dialog.sheet { margin: auto; max-width: 460px; max-height: 88dvh; border-radius: 28px; }
+  dialog.sheet[open] { animation: pop 220ms cubic-bezier(0.2, 0.9, 0.25, 1); }
+}
+
+@keyframes sheet-up { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes pop { from { opacity: 0; transform: scale(0.96) translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } }
+@keyframes toast-in { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: none; } }
+.animate-toast { animation: toast-in 220ms cubic-bezier(0.2, 0.9, 0.25, 1); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after, dialog.sheet[open], dialog.sheet::backdrop { animation: none !important; transition: none !important; }
+}
