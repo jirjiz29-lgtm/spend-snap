@@ -6,6 +6,9 @@ SpendSnap is a tiny, private expense tracker. Add an expense and instantly see a
 
 **Live demo:** _add your Vercel/Netlify link here_
 
+## Developer
+Designed & built by **Jirjis**.
+
 ## Features
 - **Installable PWA** — add to home screen, opens full-screen, **works offline** (service worker precaches the whole build). Home-screen shortcut: *Add expense*.
 - **Mobile-first** — bottom-sheet add/edit, big thumb-friendly amount entry, one-tap category grid, Today/Yesterday chips, floating add button, safe-area aware.

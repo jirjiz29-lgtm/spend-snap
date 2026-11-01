@@ -2,6 +2,7 @@
   "name": "spendsnap",
   "private": true,
   "version": "1.0.0",
+  "author": "Jirjis",
   "type": "module",
   "scripts": {
     "dev": "vite",

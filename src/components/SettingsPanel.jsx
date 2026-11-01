@@ -90,7 +90,10 @@ export default function SettingsPanel({ currency, onCurrencyChange, monthLabel, 
         />
       </Group>
 
-      <p className="pb-1 text-center text-xs text-muted">Stored only on this device. Nothing is sent anywhere.</p>
+      <p className="pb-1 text-center text-xs text-muted">Stored only on this device. Nothing is sent anywhere.
+        <br />
+        SpendSnap by Jirjis
+      </p>
     </div>
   )
 }

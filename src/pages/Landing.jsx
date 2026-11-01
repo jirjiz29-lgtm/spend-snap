@@ -166,7 +166,7 @@ export default function Landing() {
 
       <footer className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-10 pb-[calc(env(safe-area-inset-bottom)+40px)] text-sm text-muted sm:flex-row sm:justify-between sm:px-6">
         <p>© {new Date().getFullYear()} SpendSnap</p>
-        <p>Your data stays in your browser.</p>
+        <p>Designed &amp; built by <span className="font-medium text-ink">Jirjis</span></p>
       </footer>
     </div>
   )
